@@ -3,6 +3,7 @@ import { Fraunces, Inter, IBM_Plex_Mono } from "next/font/google";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { MotionProvider } from "@/components/motion-provider";
+import { Preloader } from "@/components/preloader";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -49,6 +50,7 @@ export default function RootLayout({
       </head>
       <body>
         <MotionProvider>
+          <Preloader />
           <Navbar />
           <main>{children}</main>
           <Footer />

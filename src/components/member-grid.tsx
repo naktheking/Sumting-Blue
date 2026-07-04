@@ -5,7 +5,7 @@ import { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import type { Member } from "@/lib/data";
+import { memberQuestions, type Member } from "@/lib/data";
 import { Waveform } from "@/components/waveform";
 
 export function MemberGrid({ members }: { members: Member[] }) {
@@ -25,7 +25,7 @@ export function MemberGrid({ members }: { members: Member[] }) {
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.4, delay: 0.03 * (i % 4) }}
             className="group bg-paper text-left focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-cobalt"
-            aria-label={`${m.name} — ${m.instrument}. Read note.`}
+            aria-label={`${m.name} — ${m.instrument}. Read their answers.`}
           >
             <div className="flex items-baseline justify-between px-3 py-2 font-mono text-[11px] uppercase tracking-[0.1em]">
               <span className="text-muted">
@@ -122,12 +122,27 @@ export function MemberGrid({ members }: { members: Member[] }) {
                       <p className="font-mono text-xs uppercase tracking-[0.14em] text-cobalt">
                         {selected.instrument}
                       </p>
-                      <Dialog.Description className="mt-2 border-l-2 border-cobalt pl-4 font-display text-lg italic leading-relaxed">
-                        “{selected.note}”
+                      <Dialog.Description className="sr-only">
+                        {selected.name}&apos;s answers
                       </Dialog.Description>
-                      <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
-                        — the rest of the band
-                      </p>
+                      <div className="mt-3 space-y-5">
+                        <div>
+                          <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
+                            {memberQuestions.favoriteSong}
+                          </p>
+                          <p className="mt-1.5 border-l-2 border-cobalt pl-4 font-display text-lg italic leading-relaxed">
+                            {selected.favoriteSong}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
+                            {memberQuestions.favoriteMemory}
+                          </p>
+                          <p className="mt-1.5 border-l-2 border-cobalt pl-4 font-display text-lg italic leading-relaxed">
+                            {selected.favoriteMemory}
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </motion.div>

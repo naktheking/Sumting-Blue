@@ -26,8 +26,8 @@ export default async function MembersPage() {
             Eleven <em className="text-cobalt">of us</em>
           </h1>
           <p className="mt-5 max-w-lg text-muted">
-            Tap anyone to see what the rest of the band actually thinks of
-            them.
+            Tap anyone to see their favorite song and their favorite Sumting
+            Blue memory.
           </p>
         </Reveal>
       </section>

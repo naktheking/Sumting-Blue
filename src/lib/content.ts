@@ -1,26 +1,8 @@
 import { cache } from "react";
-import {
-  site,
-  members,
-  songs,
-  videos,
-  milestones,
-  type Member,
-  type Song,
-  type Video,
-  type Milestone,
-} from "@/lib/data";
+import { site, members, songs, videos, milestones, type Content } from "@/lib/data";
 import { getMongoClient, DB_NAME, CONTENT_COLLECTION, CONTENT_DOC_ID } from "@/lib/db";
 
-export type SiteInfo = typeof site;
-
-export type Content = {
-  site: SiteInfo;
-  members: Member[];
-  songs: Song[];
-  videos: Video[];
-  milestones: Milestone[];
-};
+export type { Content };
 
 // The local copy, bundled with the site. Used as the fallback whenever
 // MongoDB is not configured, unreachable, or missing a section — and as
