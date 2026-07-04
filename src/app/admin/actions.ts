@@ -3,6 +3,8 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { put } from "@vercel/blob";
+import sharp from "sharp";
 import {
   ADMIN_COOKIE,
   createSessionToken,
@@ -12,6 +14,9 @@ import {
 import { getMongoClient, DB_NAME, CONTENT_COLLECTION, CONTENT_DOC_ID } from "@/lib/db";
 import { localContent } from "@/lib/content";
 import type { Content } from "@/lib/data";
+
+const MAX_UPLOAD_BYTES = 15 * 1024 * 1024; // 15MB, ample for phone photos
+const MAX_DIM = 1600;
 
 export async function login(formData: FormData) {
   if (!process.env.ADMIN_PASSWORD) redirect("/admin?error=unconfigured");
@@ -111,4 +116,52 @@ export async function saveContent(
   // Bust the ISR cache so the live site reflects the edit immediately.
   revalidatePath("/", "layout");
   return { ok: true, message: "Saved — the live site is updated." };
+}
+
+export async function uploadPhoto(
+  formData: FormData,
+): Promise<{ ok: boolean; url?: string; message: string }> {
+  if (!(await isAuthed())) {
+    return { ok: false, message: "Session expired — refresh and sign in again." };
+  }
+  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+    return { ok: false, message: "Photo uploads aren't configured on this deployment." };
+  }
+
+  const file = formData.get("file");
+  if (!(file instanceof File) || file.size === 0) {
+    return { ok: false, message: "No file received." };
+  }
+  if (!file.type.startsWith("image/")) {
+    return { ok: false, message: "That file isn't an image." };
+  }
+  if (file.size > MAX_UPLOAD_BYTES) {
+    return { ok: false, message: "Image is too large (max 15MB)." };
+  }
+
+  try {
+    const input = Buffer.from(await file.arrayBuffer());
+    const image = sharp(input, { failOn: "none" }).rotate();
+    const meta = await image.metadata();
+
+    let pipeline = image;
+    if (meta.width && meta.height && Math.max(meta.width, meta.height) > MAX_DIM) {
+      pipeline = pipeline.resize({
+        width: meta.width >= meta.height ? MAX_DIM : undefined,
+        height: meta.height > meta.width ? MAX_DIM : undefined,
+        withoutEnlargement: true,
+      });
+    }
+    const output = await pipeline.jpeg({ quality: 80, mozjpeg: true }).toBuffer();
+
+    const blob = await put(`member-photos/${crypto.randomUUID()}.jpg`, output, {
+      access: "public",
+      contentType: "image/jpeg",
+    });
+
+    return { ok: true, url: blob.url, message: "Uploaded." };
+  } catch (err) {
+    console.error("[admin] photo upload failed:", err);
+    return { ok: false, message: "Upload failed — try again." };
+  }
 }

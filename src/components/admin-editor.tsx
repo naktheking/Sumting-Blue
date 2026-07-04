@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { Plus, Trash2 } from "lucide-react";
+import { useRef, useState, useTransition } from "react";
+import { Plus, Trash2, Upload } from "lucide-react";
 import { genres, memberQuestions, type Content } from "@/lib/data";
-import { saveContent, logout } from "@/app/admin/actions";
+import { saveContent, logout, uploadPhoto } from "@/app/admin/actions";
 
 const inputCls =
   "w-full border border-ink/40 bg-paper px-3 py-2.5 text-sm focus:border-cobalt focus:outline-none";
@@ -13,10 +13,71 @@ const labelCls =
 type FieldDef = {
   key: string;
   label: string;
-  kind?: "text" | "textarea" | "select" | "checkbox";
+  kind?: "text" | "textarea" | "select" | "checkbox" | "image";
   options?: readonly string[];
   wide?: boolean;
 };
+
+function ImageField({
+  def,
+  value,
+  onChange,
+}: {
+  def: FieldDef;
+  value: unknown;
+  onChange: (v: unknown) => void;
+}) {
+  const fileInput = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleFile(file: File | undefined) {
+    if (!file) return;
+    setUploading(true);
+    setError(null);
+    const formData = new FormData();
+    formData.set("file", file);
+    const result = await uploadPhoto(formData);
+    setUploading(false);
+    if (result.ok && result.url) {
+      onChange(result.url);
+    } else {
+      setError(result.message);
+    }
+    if (fileInput.current) fileInput.current.value = "";
+  }
+
+  return (
+    <label className={`${labelCls} ${def.wide ? "sm:col-span-2" : ""}`}>
+      {def.label}
+      <div className="flex gap-2">
+        <input
+          value={String(value ?? "")}
+          onChange={(e) => onChange(e.target.value)}
+          className={inputCls}
+          placeholder="https://… or /images/…"
+        />
+        <button
+          type="button"
+          onClick={() => fileInput.current?.click()}
+          disabled={uploading}
+          className="flex shrink-0 items-center gap-1.5 border border-ink/40 px-3 py-2.5 text-sm hover:border-cobalt disabled:opacity-50"
+        >
+          <Upload size={14} />
+          {uploading ? "Uploading…" : "Upload"}
+        </button>
+        <input
+          ref={fileInput}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => handleFile(e.target.files?.[0])}
+        />
+      </div>
+      {error && <span className="normal-case text-cobalt">{error}</span>}
+    </label>
+  );
+}
 
 function Field({
   def,
@@ -55,6 +116,9 @@ function Field({
         </select>
       </label>
     );
+  }
+  if (def.kind === "image") {
+    return <ImageField def={def} value={value} onChange={onChange} />;
   }
   if (def.kind === "textarea") {
     return (
@@ -181,8 +245,8 @@ export function AdminEditor({ initial }: { initial: Content }) {
       </div>
       <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted">
         Edits here change the words and pictures on the live site — never the
-        design. Images are URLs: paste a link to any hosted image (or a path
-        like /images/name.png for files already on the site).
+        design. For member photos, click Upload to pick a file from your
+        device, or paste a link to any hosted image.
       </p>
 
       <div className="mt-8 flex flex-col gap-4">
@@ -220,7 +284,7 @@ export function AdminEditor({ initial }: { initial: Content }) {
           fields={[
             { key: "name", label: "Name" },
             { key: "instrument", label: "Instrument" },
-            { key: "image", label: "Photo (URL or /images/…)", wide: true },
+            { key: "image", label: "Photo (upload, URL, or /images/…)", kind: "image", wide: true },
             { key: "favoriteSong", label: "Favorite song answer", kind: "textarea", wide: true },
             { key: "favoriteMemory", label: "Favorite memory answer", kind: "textarea", wide: true },
           ]}
