@@ -23,14 +23,14 @@ export const memberQuestions = {
 // Answers below are placeholders — replace with each member's real
 // answers via the /admin page (or edit here and re-run `npm run db:seed`).
 export const members: Member[] = [
-  { name: "Malka", instrument: "Keys", favoriteSong: "Misty — Ella Fitzgerald", favoriteMemory: "Our first full-band rehearsal finally sounding like a band.", image: "/images/malka.png" },
-  { name: "Alexis", instrument: "Vocals", favoriteSong: "At Last — Etta James", favoriteMemory: "The crowd singing the last chorus back at us.", image: "/images/alexis.png" },
-  { name: "Naomi", instrument: "Vocals", favoriteSong: "Dreams — Fleetwood Mac", favoriteMemory: "Post-show boba runs, every single time.", image: "/images/naomi.png" },
-  { name: "Ronyn", instrument: "Vocals", favoriteSong: "Die with a Smile — Lady Gaga & Bruno Mars", favoriteMemory: "Nailing the three-part harmony we'd been fighting for weeks.", image: "/images/ronyn.png" },
-  { name: "Ansel", instrument: "Bass", favoriteSong: "Just the Two of Us — Bill Withers", favoriteMemory: "Locking in with the drums for the first time.", image: "/images/ansel.png" },
+  { name: "Malka", instrument: "Keys", favoriteSong: "Misty — Ella Fitzgerald", favoriteMemory: "Our first full-band rehearsal finally sounding like a band.", image: "/images/malka.jpeg" },
+  { name: "Alexis", instrument: "Vocals", favoriteSong: "At Last — Etta James", favoriteMemory: "The crowd singing the last chorus back at us.", image: "/images/alexis.jpeg" },
+  { name: "Naomi", instrument: "Vocals", favoriteSong: "Dreams — Fleetwood Mac", favoriteMemory: "Post-show boba runs, every single time.", image: "/images/naomi.jpeg" },
+  { name: "Ronyn", instrument: "Vocals", favoriteSong: "Die with a Smile — Lady Gaga & Bruno Mars", favoriteMemory: "Nailing the three-part harmony we'd been fighting for weeks.", image: "/images/ronyn.jpeg" },
+  { name: "Ansel", instrument: "Bass", favoriteSong: "Just the Two of Us — Bill Withers", favoriteMemory: "Locking in with the drums for the first time.", image: "/images/ansel.jpeg" },
   { name: "Ranga", instrument: "Electric Guitar", favoriteSong: "Smooth Operator — Sade", favoriteMemory: "The impromptu jam that became our encore.", image: "/images/ranga.png" },
   { name: "Tyler", instrument: "Guitar / Drums", favoriteSong: "Iris — Goo Goo Dolls", favoriteMemory: "Switching from guitar to drums mid-set on a dare.", image: "/images/tyler.png" },
-  { name: "Max", instrument: "Trumpet", favoriteSong: "I Want You Back — The Jackson 5", favoriteMemory: "The first time the horn section actually hit together.", image: "/images/max.png" },
+  { name: "Max", instrument: "Trumpet", favoriteSong: "I Want You Back — The Jackson 5", favoriteMemory: "The first time the horn section actually hit together.", image: "/images/max.jpg" },
   { name: "Ellie", instrument: "Violin", favoriteSong: "Mia & Sebastian's Theme — Justin Hurwitz", favoriteMemory: "Sound-checking in an empty hall at golden hour.", image: "/images/ellie.png" },
   { name: "Maya", instrument: "Saxophone", favoriteSong: "Careless Whisper (obviously)", favoriteMemory: "Every single time someone requests Careless Whisper.", image: "/images/maya.png" },
   { name: "London", instrument: "Drums", favoriteSong: "Isn't She Lovely — Stevie Wonder", favoriteMemory: "Winter show, final song, lights down.", image: "/images/london.png" },
