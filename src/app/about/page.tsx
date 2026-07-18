@@ -10,7 +10,7 @@ import { getContent } from "@/lib/content";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "The story of Sumting Blue — from two UCLA freshmen in September 2025 to an 11-piece jazz/pop fusion band.",
+    "The story of Sumting Blue. How the name came to be and where we started. ",
 };
 
 export const revalidate = 60;
@@ -36,25 +36,24 @@ export default async function AboutPage() {
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 md:px-6 md:py-24 lg:grid-cols-2">
           <Reveal>
             <h2 className="font-display text-3xl font-medium tracking-tight md:text-4xl">
-              Two freshmen and a shared playlist
+              2 Friends and The Hedrick Court 
             </h2>
             <div className="mt-6 space-y-4 leading-relaxed text-muted">
               <p>
-                Sumting Blue started in September 2025, when two UCLA freshmen
-                realized they kept queuing up the same songs — Laufey next to
-                Fleetwood Mac, Ella Fitzgerald next to ABBA — and figured a band
-                should sound like that too.
+                Sumting Blue was founded in September 2025, 
+                when Malka and Alexis shared a big dream during a UCLA GE class.
+                They put up recruitment posters across campus, which brought 
+                together nine more talented musicians. 
               </p>
               <p>
-                Word spread the way it does on a campus with too many talented
-                people. Singers, horns, strings, and a rhythm section signed on,
-                and within a few months the duo had become an eleven-piece
-                spanning freshmen to graduate students.
+                Word spread the way it does on a campus with more gigs lined up
+                and more members joining. Within a few months the duo had become
+                an eleven-piece spanning freshmen to graduate students.
               </p>
               <p>
-                We play jazz standards with a pop heart and pop songs with a
-                jazz brain — at UCLA events, local venues, parties, and private
-                events around Los Angeles.
+                We play jazz standards fused with pop genre. Blending the best of 
+                both worlds. At UCLA sponsor events, local concerts, parties, 
+                and private events around Los Angeles. 
               </p>
             </div>
           </Reveal>
