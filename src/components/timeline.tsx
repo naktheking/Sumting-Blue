@@ -8,9 +8,9 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
         <li key={m.title} className="border-b border-ink/20">
           <Reveal
             delay={0.04 * i}
-            className="grid gap-2 py-7 sm:grid-cols-[180px_1fr] sm:gap-8"
+            className="grid gap-2 py-7 sm:grid-cols-[220px_1fr] sm:gap-8"
           >
-            <p className="font-mono text-xs uppercase tracking-[0.14em] text-muted">
+            <p className="font-mono text-xs uppercase tracking-[0.14em] text-muted sm:whitespace-nowrap">
               {String(i + 1).padStart(2, "0")} — {m.date}
             </p>
             <div>
