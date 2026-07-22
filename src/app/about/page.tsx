@@ -55,6 +55,9 @@ export default async function AboutPage() {
                 both worlds. At UCLA sponsor events, local concerts, parties, 
                 and private events around Los Angeles. 
               </p>
+              <p>
+                Fun fact: We are spread out across 10 different majors at UCLA!
+              </p>
             </div>
           </Reveal>
           <Reveal delay={0.1}>
